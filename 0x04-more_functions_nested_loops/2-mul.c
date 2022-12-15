@@ -2,9 +2,9 @@
 
 /**
  * mul - multiplies two integers
- * @a: first number.
- * @b: second number.
- * Return : multiiplication
+ * @a: int to be multiplied to b
+ * @b: int to be multiplied to a
+ * Return: the result of the operation
  */
 
 int mul(int a, int b)
