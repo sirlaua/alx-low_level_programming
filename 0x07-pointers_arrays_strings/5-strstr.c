@@ -1,7 +1,8 @@
 #include "main.h"
 
 /**
- * _strstr - finds the first occurrence of the substring.
+ * _strstr - finds the first occurrence of the substring
+ * needle in the string haystack 
  * @haystack: entire string
  * @needle: substring
  * Return: pointer to the beginning of located substring or
@@ -9,22 +10,22 @@
  */
 char *_strstr(char *haystack, char *needle)
 {
-	char *bhaystack;
-	char *pneedle;
+	char *h;
+	char *n;
 
 	while (*haystack != '\0')
 	{
-		bhaystack = haystack;
-		pneedle = needle;
+		h = haystack;
 
-		while (*haystack != '\0' && *pneedle != '\0' && *haystack == *pneedle)
+
+		while (*haystack != '\0' && *n != '\0' && *haystack == *n)
 		{
 			haystack++;
-			pneedle++;
+			n++;
 		}
-		if (!*pneedle)
-			return (bhaystack);
-		haystack = bhaystack + 1
+		if (!*n)
+			return (h);
+		haystack = h + 1;
 	}
 	return (0);
 }
