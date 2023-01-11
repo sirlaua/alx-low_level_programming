@@ -1,109 +1,52 @@
 #include "main.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 /**
- * countWords - counts the numbers o words in the string
- *
- * @str: source string
- *
- * Return: the number of words.
- */
-
-int countWords(char *str)
-{
-	int words;
-
-	words = 0;
-
-	while (*str)
-	{
-		if (*str != ' ')
-		{
-			if (*(str + 1) == ' ' || *(str + 1) == '\0')
-				words++;
-			str++;
-		}
-		else
-			str++;
-	}
-	return (words);
-}
-
-/**
- * countChars - counts the numbers o characters in a string
- *
- * @str: source string
- *
- * Return: the number of words.
- */
-
-int countChars(char *str)
-{
-	int chars;
-
-	chars = 0;
-	while (*str)
-	{
-		if (*str != ' ')
-		{
-			if (*(str + 1) != ' ' || *(str + 1) != '\0')
-				chars++;
-			str++;
-		}
-		else
-			break;
-	}
-	return (chars);
-}
-
-/**
- * strtow - separates the character to an string of words
- *
- * @str: source string
- *
- * Return: the pointer to the new array of words.
- */
+* strtow - splits a string into words.
+* @str: string to be splitted
+* Return: pointer to an array of strings (words) or null
+**/
 
 char **strtow(char *str)
 {
-	int numWords, numChars, i, j;
+	int i, j, k = 0, l, m, count = 0, len;
 	char **words;
 
-	i = 0;
-	if (str == NULL || *str == '\0')
+	if (str == NULL || str[0] == '\0')
 		return (NULL);
-	numWords = countWords(str);
-	if (numWords == 0)
+
+	for (i = 0; str[i] != '\0'; i++)
+		if (str[i] != ' ' && (str[i + 1] == ' ' || str[i + 1] == '\0'))
+			count++;
+	if (count == 0)
 		return (NULL);
-	words = (char **) malloc((numWords + 1) * sizeof(char *));
+	words = malloc((count + 1) * sizeof(char *));
 	if (words == NULL)
 	{
 		free(words);
 		return (NULL);
 	}
-	while (i < numWords)
+	for (i = 0; str[i] != '\0' &&  k < count; i++)
 	{
-		if (*str == ' ')
-			str++;
-		else
+		if (str[i] != ' ')
 		{
-			numChars = countChars(str);
-			*(words + i) = (char *) malloc((numChars + 1) * sizeof(char));
-			if (*(words + i) == NULL)
+			len = 0;
+			for (j = i; str[j] != ' ' && str[j] != '\0'; j++)
+				len++;
+			words[k] = malloc((len + 1) * sizeof(char));
+			if (words[k] == NULL)
 			{
-				for (j = 0; j < i; j++)
-					free(*(words + j));
+				for (m = 0; m < k; m++)
+					free(words[k]);
 				free(words);
 				return (NULL);
 			}
-			for (j = 0; j < numChars; j++)
-			{
-				*(*(words + i) + j) = *str;
-				str++; }
-			*(*(words + i) + j) = '\0';
-			i++;
+			for (l = 0; l < len; l++, i++)
+				words[k][l] = str[i];
+			words[k][l] = '\0', k++;
 		}
 	}
-	*(words + numWords) = NULL;
+	words[k] = NULL;
 	return (words);
 }
-
