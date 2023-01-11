@@ -38,21 +38,21 @@ int countWords(char *str)
 
 int countChars(char *str)
 {
-	int n;
+	int chars;
 
-	n = 0;
+	chars = 0;
 	while (*str)
 	{
 		if (*str != ' ')
 		{
 			if (*(str + 1) != ' ' || *(str + 1) != '\0')
-				n++;
+				chars++;
 			str++;
 		}
 		else
 			break;
 	}
-	return (n);
+	return (chars);
 }
 
 /**
@@ -60,7 +60,7 @@ int countChars(char *str)
  *
  * @str: source string
  *
- * Return: the pointer to the new array of words
+ * Return: the pointer to the new array of words.
  */
 
 char **strtow(char *str)
@@ -106,3 +106,4 @@ char **strtow(char *str)
 	*(words + numWords) = NULL;
 	return (words);
 }
+
