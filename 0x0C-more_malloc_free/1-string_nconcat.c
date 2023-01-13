@@ -1,43 +1,49 @@
 #include "main.h"
+#include <stdlib.h>
 
 /**
- * string_nconcat - function that concatenates two strings
+ * string_nconcat - concatenates two strings
  * @s1: first string
  * @s2: second string
  * @n: memory size in bytes
  *
- * Return: a pointer to the string array of the 2 strings.
+ * Return: pointer to the allocated memory.
+ * if malloc fails, status value is equal to 98.
  */
-
 char *string_nconcat(char *s1, char *s2, unsigned int n)
 {
 	char *s;
-	unsigned int i, len1, len2, total_len;
-
-	len1 = 0;
-	len2 = 0;
+	unsigned int ls1, ls2, ls, i;
 
 	if (s1 == NULL)
 		s1 = "";
+
 	if (s2 == NULL)
 		s2 = "";
-	for (i = 0; s1[i] != '\0'; i++)
-		len1++;
-	for (i = 0; s2[i] != '\0'; i++)
-		len2++;
-	if (n >= len2)
-		n = len2;
 
-	total_len = len1 + n;
+	for (ls1 = 0; s1[ls1] != '\0'; ls1++)
+		;
 
-	s = malloc(sizeof(char) * (total_len + 1));
+	for (ls2 = 0; s2[ls2] != '\0'; ls2++)
+		;
+
+	if (n > ls2)
+		n = ls2;
+
+	ls = ls1 + n;
+
+	s = malloc(ls + 1);
+
 	if (s == NULL)
 		return (NULL);
-	for (i = 0; i < len1; i++)
-		s[i] = s1[i];
-	for (i = 0; i < n; i++)
-		s[len1 + i] = s2[i];
-	s[len1 + i] = '\0';
+
+	for (i = 0; i < ls; i++)
+		if (i < ls1)
+			s[i] = s1[i];
+		else
+			s[i] = s2[i - ls1];
+
+	s[i] = '\0';
 
 	return (s);
 }
